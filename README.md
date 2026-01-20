@@ -30,7 +30,7 @@ dhi-search --test
 
 ---
 
-## Running with Docker
+## Running with Docker & Claude Desktop
 
 ### 1. Build the Image
 
@@ -38,20 +38,9 @@ dhi-search --test
 docker build -t dhi-search-mcp .
 ```
 
-### 2. Run the Server (for MCP Clients)
 
-```bash
-docker run -i --rm \
-  -e DOCKER_USERNAME=$DOCKER_USERNAME \
-  -e DOCKER_PAT=$DOCKER_PAT \
-  dhi-search-mcp
-```
-> [!NOTE]
-> The `-i` flag is required for stdio communication.
 
----
-
-## Claude Desktop Integration
+## 2. Claude Desktop Integration
 
 Add the following to your Claude Desktop config (`~/Library/Application\ Support/Claude/claude_desktop_config.json`):
 
@@ -71,5 +60,13 @@ Add the following to your Claude Desktop config (`~/Library/Application\ Support
     }
   }
 }
-```
 
+## 3. Test the Integration
+
+Sample input prompts
+
+```
+is kubectl available in the DHI catalog?
+is there a helm chart for Grafana?
+what are the tags for the postgres versions available in the DHI catalog?
+```
