@@ -12,22 +12,6 @@ An MCP (Model Context Protocol) server that provides Docker Hardened Image catal
 - **get_image_support_info**: Retrieve lifecycle information (End of Life, End of Support) for an image tag.
 - **Connectivity Test**: Built-in `--test` flag to verify credentials without an MCP client.
 
-## Prerequisites
-
-Set the following environment variables (required for both local and Docker execution):
-
-```bash
-export DOCKER_USERNAME="your_docker_username"
-export DOCKER_PAT="your_docker_personal_access_token"
-```
-
-The server uses the `stdio` transport and is waiting for JSON-RPC messages from an MCP client (like Claude Desktop). To test your setup without an MCP client, use the `--test` flag described below.
-
-```bash
-dhi-search --test
-```
-
-
 ---
 
 ## Running with Docker & Claude Desktop
