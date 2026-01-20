@@ -53,7 +53,7 @@ docker run -i --rm \
 
 ## Claude Desktop Integration
 
-Add the following to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
+Add the following to your Claude Desktop config (`~/Library/Application\ Support/Claude/claude_desktop_config.json`):
 
 ```json
 {
