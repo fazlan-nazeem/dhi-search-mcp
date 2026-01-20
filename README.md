@@ -60,6 +60,7 @@ Add the following to your Claude Desktop config (`~/Library/Application\ Support
     }
   }
 }
+```
 
 ## 3. Test the Integration
 
