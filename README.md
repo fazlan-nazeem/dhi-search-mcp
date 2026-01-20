@@ -70,4 +70,5 @@ Sample input prompts
 is kubectl available in the DHI catalog?
 is there a helm chart for Grafana?
 what are the tags for the postgres versions available in the DHI catalog?
+Is there a FIPS compliant image for prometheus
 ```
