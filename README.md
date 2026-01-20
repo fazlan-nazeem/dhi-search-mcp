@@ -21,38 +21,12 @@ export DOCKER_USERNAME="your_docker_username"
 export DOCKER_PAT="your_docker_personal_access_token"
 ```
 
-## Troubleshooting: "Invalid JSON" Error
-
-If you run `dhi-search` directly in your terminal, you will see an error like:
-`ERROR Received exception from stream: 1 validation error for JSONRPCMessage ... Invalid JSON: EOF while parsing a value`.
-
-**This is expected behavior.** The server uses the `stdio` transport and is waiting for JSON-RPC messages from an MCP client (like Claude Desktop). To test your setup without an MCP client, use the `--test` flag described below.
-
----
-
-## Running Locally
-
-### 1. Setup Environment
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -e .
-```
-
-### 2. Verify Connectivity
+The server uses the `stdio` transport and is waiting for JSON-RPC messages from an MCP client (like Claude Desktop). To test your setup without an MCP client, use the `--test` flag described below.
 
 ```bash
 dhi-search --test
 ```
 
-### 3. Debugging with MCP Inspector
-
-To test the tools interactively:
-
-```bash
-mcp dev src/dhi_search_mcp/server.py
-```
 
 ---
 
@@ -64,16 +38,7 @@ mcp dev src/dhi_search_mcp/server.py
 docker build -t dhi-search-mcp .
 ```
 
-### 2. Verify Connectivity
-
-```bash
-docker run --rm \
-  -e DOCKER_USERNAME=$DOCKER_USERNAME \
-  -e DOCKER_PAT=$DOCKER_PAT \
-  dhi-search-mcp --test
-```
-
-### 3. Run the Server (for MCP Clients)
+### 2. Run the Server (for MCP Clients)
 
 ```bash
 docker run -i --rm \
@@ -89,24 +54,6 @@ docker run -i --rm \
 ## Claude Desktop Integration
 
 Add the following to your Claude Desktop config (`~/Library/Application Support/Claude/claude_desktop_config.json`):
-
-### Option A: Local Installation (Best for development)
-
-```json
-{
-  "mcpServers": {
-    "dhi-search-local": {
-      "command": "/Users/fazlannazeem/projects/dhi-search-mcp/.venv/bin/dhi-search",
-      "env": {
-        "DOCKER_USERNAME": "your_username",
-        "DOCKER_PAT": "your_pat"
-      }
-    }
-  }
-}
-```
-
-### Option B: Docker (Best for clean environments)
 
 ```json
 {
@@ -126,7 +73,3 @@ Add the following to your Claude Desktop config (`~/Library/Application Support/
 }
 ```
 
-## Development
-
-- **core.py**: Logic for authentication, GraphQL querying, and fuzzy matching.
-- **server.py**: Defines the MCP tools and entry point.
