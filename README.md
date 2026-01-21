@@ -32,9 +32,9 @@ If the test is successful, you should see output similar to:
 
 ```bash
 Successfully connected to DHI Catalog!
-Catalog contains 12345 items.
-  - IMAGE: 12345
-  - HELM_CHART: 67890
+Catalog contains 287 items.
+  - IMAGE: 259
+  - HELM_CHART: 28
 ```
 
 ### 3. Claude Desktop Integration
