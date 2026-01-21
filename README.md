@@ -22,9 +22,22 @@ An MCP (Model Context Protocol) server that provides Docker Hardened Image catal
 docker build -t dhi-search-mcp .
 ```
 
+### 2. Check Connectivity
 
+```bash
+docker run -i --rm -e DOCKER_USERNAME="your_username" -e DOCKER_PAT="your_pat" dhi-search-mcp --test
+```
 
-## 2. Claude Desktop Integration
+If the test is successful, you should see output similar to:
+
+```bash
+Successfully connected to DHI Catalog!
+Catalog contains 12345 items.
+  - IMAGE: 12345
+  - HELM_CHART: 67890
+```
+
+### 3. Claude Desktop Integration
 
 Add the following to your Claude Desktop config (`~/Library/Application\ Support/Claude/claude_desktop_config.json`):
 
@@ -46,7 +59,7 @@ Add the following to your Claude Desktop config (`~/Library/Application\ Support
 }
 ```
 
-## 3. Test the Integration
+### 4. Test the Integration
 
 Sample input prompts
 
