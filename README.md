@@ -69,3 +69,7 @@ is there a helm chart for Grafana?
 what are the tags for the postgres versions available in the DHI catalog?
 Is there a FIPS compliant image for prometheus
 ```
+
+#### Claude Desktop 
+![alt text](dhi-search-mcp-claude.gif "Claude Desktop")
+
