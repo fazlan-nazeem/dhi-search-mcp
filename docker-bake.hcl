@@ -1,0 +1,106 @@
+variable "TAG" {
+  default = "0226"
+}
+
+variable "MCP_METADATA" {
+  default = <<EOT
+name: search-dhi
+title: Search DHI
+description: Search the Docker Hardened Images (DHI) catalog for secure, minimal container images. Supports fuzzy search, catalog statistics, tag listing, FIPS/STIG compliance detection, and image lifecycle information.
+allowHosts:
+  - hub.docker.com:443
+  - api.scout.docker.com:443
+secrets:
+  - name: search-dhi.docker_username
+    env: DOCKER_USERNAME
+    example: myusername
+  - name: search-dhi.docker_pat
+    env: DOCKER_PAT
+    example: dckr_pat_xxxxxxxxxxxxxxxxxxxx
+tools:
+  - name: search_dhi_catalog
+    description: Search for Docker Hardened Image matches for a list of image names using fuzzy matching. Returns top matches and unmatched names.
+    arguments:
+      - name: image_names
+        type: array
+        description: List of image names to search for (e.g., ["postgres", "nginx", ".NET Runtime"])
+    annotations:
+      readOnlyHint: true
+      idempotentHint: true
+      openWorldHint: true
+  - name: get_dhi_statistics
+    description: Get statistics about the Docker Hardened Image catalog, including total item count and breakdown by type (IMAGE, HELM_CHART).
+    arguments: []
+    annotations:
+      readOnlyHint: true
+      idempotentHint: true
+      openWorldHint: true
+  - name: list_dhi_images
+    description: List all available images in the Docker Hardened Image catalog, optionally filtered by type.
+    arguments:
+      - name: image_type
+        type: string
+        description: Optional filter by type. Use "IMAGE" for container images or "HELM_CHART" for Helm charts. Omit to list all.
+    annotations:
+      readOnlyHint: true
+      idempotentHint: true
+      openWorldHint: true
+  - name: list_image_tags
+    description: List all available tags for a specific Docker Hardened Image repository.
+    arguments:
+      - name: repository_name
+        type: string
+        description: The name of the repository (e.g., "postgres", "nginx")
+    annotations:
+      readOnlyHint: true
+      idempotentHint: true
+      openWorldHint: true
+  - name: get_compliance_info
+    description: Check whether a Docker Hardened Image repository offers FIPS or STIG compliant variants based on its available tags.
+    arguments:
+      - name: repository_name
+        type: string
+        description: The name of the repository (e.g., "postgres", "nginx")
+    annotations:
+      readOnlyHint: true
+      idempotentHint: true
+      openWorldHint: true
+  - name: get_image_support_info
+    description: Retrieve lifecycle information (End of Life, End of Support dates) for a specific image tag in a Docker Hardened Image repository.
+    arguments:
+      - name: repository_name
+        type: string
+        description: The name of the repository (e.g., "postgres", "nginx")
+      - name: tag
+        type: string
+        description: The specific tag to query (e.g., "16", "3.20")
+    annotations:
+      readOnlyHint: true
+      idempotentHint: true
+      openWorldHint: true
+category: Security
+tags:
+  - docker
+  - hardened-images
+  - security
+  - dhi
+  - compliance
+  - fips
+  - stig
+  - containers
+  - catalog
+license: Apache-2.0
+EOT
+}
+
+group "default" {
+  targets = ["search-dhi"]
+}
+
+target "search-dhi" {
+  dockerfile = "Dockerfile"
+  tags       = ["demonstrationorg/search-dhi-mcp:${TAG}"]
+  labels = {
+    "io.docker.server.metadata" = MCP_METADATA
+  }
+}

@@ -70,6 +70,45 @@ what are the tags for the postgres versions available in the DHI catalog?
 Is there a FIPS compliant image for prometheus
 ```
 
-#### Claude Desktop 
+#### Claude Desktop
 ![alt text](dhi-search-mcp-claude.gif "Claude Desktop")
+
+---
+
+## Running with Docker MCP Gateway
+
+The server includes `mcp-search-dhi.yaml` and `docker-bake.hcl` for publishing and running via the [Docker MCP Gateway](https://github.com/docker/mcp-gateway).
+
+### 1. Build and Push with Docker Bake
+
+`docker-bake.hcl` builds the image and embeds the MCP server metadata as an image label, making it self-describing — no separate YAML file needed at runtime.
+
+```bash
+# Build and push in one step
+docker buildx bake --push
+
+# Override the tag
+TAG=0227 docker buildx bake --push
+```
+
+### 2. Run via MCP Gateway
+
+```bash
+docker mcp gateway run --servers docker://demonstrationorg/search-dhi-mcp:0226
+```
+
+### Using the YAML file directly
+
+Alternatively, use `mcp-search-dhi.yaml` to reference the server without building the image yourself:
+
+```bash
+docker mcp gateway run --server file://mcp-search-dhi.yaml
+```
+
+Or add it to a private catalog:
+
+```bash
+docker mcp catalog create my-catalog
+docker mcp catalog add my-catalog search-dhi file://mcp-search-dhi.yaml
+```
 
