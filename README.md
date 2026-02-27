@@ -77,38 +77,27 @@ Is there a FIPS compliant image for prometheus
 
 ## Running with Docker MCP Gateway
 
-The server includes `mcp-search-dhi.yaml` and `docker-bake.hcl` for publishing and running via the [Docker MCP Gateway](https://github.com/docker/mcp-gateway).
+The server can be used with the [Docker MCP Gateway](https://github.com/docker/mcp-gateway) via the included `server.yaml` or the pre-built catalog published to Docker Hub.
 
-### 1. Build and Push with Docker Bake
+### Option 1: Use the published catalog
 
-`docker-bake.hcl` builds the image and embeds the MCP server metadata as an image label, making it self-describing — no separate YAML file needed at runtime.
+Pull the catalog directly from Docker Hub and add it to a profile:
 
 ```bash
-# Build and push in one step
-docker buildx bake --push
-
-# Override the tag
-TAG=0227 docker buildx bake --push
+docker mcp catalog pull demonstrationorg/dhi-search-catalog:latest
+docker mcp profile server add <profile-id> --catalog demonstrationorg/dhi-search-catalog:latest
 ```
 
-### 2. Run via MCP Gateway
+### Option 2: Create a local catalog from server.yaml
 
 ```bash
-docker mcp gateway run --servers docker://demonstrationorg/search-dhi-mcp:0226
+docker mcp catalog create dhi-search-catalog --title "DHI Search" --server file://./server.yaml
+docker mcp profile server add <profile-id> --catalog dhi-search-catalog
 ```
 
-### Using the YAML file directly
-
-Alternatively, use `mcp-search-dhi.yaml` to reference the server without building the image yourself:
+### Option 3: Run directly via MCP Gateway
 
 ```bash
-docker mcp gateway run --server file://mcp-search-dhi.yaml
-```
-
-Or add it to a private catalog:
-
-```bash
-docker mcp catalog create my-catalog
-docker mcp catalog add my-catalog search-dhi file://mcp-search-dhi.yaml
+docker mcp gateway run --server file://./server.yaml
 ```
 
