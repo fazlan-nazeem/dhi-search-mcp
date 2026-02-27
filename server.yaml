@@ -2,7 +2,7 @@ name: dhi-search
 type: server
 title: Search DHI
 description: Search Docker Hardened Images (DHI) catalog for secure, minimal container images.
-image: demonstrationorg/search-dhi-mcp:0226
+image: demonstrationorg/search-dhi-mcp:latest
 
 allowHosts:
   - hub.docker.com:443
