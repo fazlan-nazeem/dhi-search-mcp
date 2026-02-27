@@ -84,8 +84,8 @@ The server can be used with the [Docker MCP Gateway](https://github.com/docker/m
 Pull the catalog directly from Docker Hub and add it to a profile:
 
 ```bash
-docker mcp catalog pull demonstrationorg/dhi-search-catalog:latest
-docker mcp profile server add <profile-id> --catalog demonstrationorg/dhi-search-catalog:latest
+docker mcp catalog pull demonstrationorg/search-dhi-catalog:latest
+docker mcp profile server add <profile-id> catalog://demonstrationorg/search-dhi-catalog:latest
 ```
 
 ### Option 2: Create a local catalog from server.yaml
