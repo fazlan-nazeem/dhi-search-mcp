@@ -70,6 +70,34 @@ what are the tags for the postgres versions available in the DHI catalog?
 Is there a FIPS compliant image for prometheus
 ```
 
-#### Claude Desktop 
+#### Claude Desktop
 ![alt text](dhi-search-mcp-claude.gif "Claude Desktop")
+
+---
+
+## Running with Docker MCP Gateway
+
+The server can be used with the [Docker MCP Gateway](https://github.com/docker/mcp-gateway) via the included `server.yaml` or the pre-built catalog published to Docker Hub.
+
+### Option 1: Use the published catalog
+
+Pull the catalog directly from Docker Hub and add it to a profile:
+
+```bash
+docker mcp catalog pull demonstrationorg/dhi-search-catalog:latest
+docker mcp profile server add <profile-id> --catalog demonstrationorg/dhi-search-catalog:latest
+```
+
+### Option 2: Create a local catalog from server.yaml
+
+```bash
+docker mcp catalog create dhi-search-catalog --title "DHI Search" --server file://./server.yaml
+docker mcp profile server add <profile-id> --catalog dhi-search-catalog
+```
+
+### Option 3: Run directly via MCP Gateway
+
+```bash
+docker mcp gateway run --server file://./server.yaml
+```
 
