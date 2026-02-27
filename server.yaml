@@ -1,0 +1,77 @@
+name: dhi-search
+type: server
+title: Search DHI
+description: Search Docker Hardened Images (DHI) catalog for secure, minimal container images.
+image: demonstrationorg/search-dhi-mcp:0226
+
+allowHosts:
+  - hub.docker.com:443
+  - api.scout.docker.com:443
+
+secrets:
+  - name: dhi-search.docker_pat
+    env: DOCKER_PAT
+    example: dckr_pat_YOUR_TOKEN_HERE
+
+env:
+  - name: DOCKER_USERNAME
+    value: "{{dhi-search.docker_username}}"
+
+config:
+  - name: dhi-search
+    description: Docker Hub credentials for DHI catalog authentication
+    type: object
+    properties:
+      docker_username:
+        type: string
+        description: Docker Hub username for DHI catalog authentication
+    required:
+      - docker_username
+
+tools:
+  - name: search_dhi_catalog
+    description: Search for Docker Hardened Image matches for a list of image names
+    arguments:
+      - name: image_names
+        type: array
+        description: List of image names to search for (e.g., ["PostgreSQL", "nginx"])
+  - name: get_dhi_statistics
+    description: Get statistics about the Docker Hardened Image catalog
+  - name: list_dhi_images
+    description: List all available images in the Docker Hardened Image catalog
+    arguments:
+      - name: image_type
+        type: string
+        description: Optional filter by type (e.g., "IMAGE" or "HELM_CHART")
+        optional: true
+  - name: list_image_tags
+    description: List all tags for a specific Docker Hardened Image repository
+    arguments:
+      - name: repository_name
+        type: string
+        description: The name of the repository (e.g., "postgres", "nginx")
+  - name: get_compliance_info
+    description: Check if a specific repository has FIPS or STIG compliant variants
+    arguments:
+      - name: repository_name
+        type: string
+        description: The name of the repository (e.g., "postgres", "nginx")
+  - name: get_image_support_info
+    description: Get lifecycle information (End of Life, End of Support) for a specific image tag
+    arguments:
+      - name: repository_name
+        type: string
+        description: The name of the repository (e.g., "postgres", "nginx")
+      - name: tag
+        type: string
+        description: The specific tag (e.g., "16", "3.20")
+
+metadata:
+  category: Security
+  tags:
+    - docker
+    - security
+    - images
+    - hardened
+  license: Apache-2.0
+  owner: demonstrationorg
